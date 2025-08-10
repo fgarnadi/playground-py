@@ -1,0 +1,6 @@
+line-length = 120
+extend-include = ["*.ipynb"]
+
+[format]
+quote-style = "double"
+skip-magic-trailing-comma = false
