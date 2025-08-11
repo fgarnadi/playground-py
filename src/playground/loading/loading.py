@@ -1,6 +1,5 @@
 import sys
 import threading
-from concurrent.futures import Future, ThreadPoolExecutor
 from types import TracebackType
 from typing import ContextManager, Self
 
@@ -18,23 +17,23 @@ class Loading(ContextManager):
         self.message: str = message
         self.delay: float = delay
         self._stop_event: threading.Event = threading.Event()
-        self._executor: ThreadPoolExecutor | None = None
-        self._future: Future | None = None
+        self._thread: threading.Thread | None = None
 
     def _spinner(self):
         spinner = ["|", "/", "-", "\\"]
         i = 0
         while not self._stop_event.is_set():
-            current_char = spinner[i % len(spinner)]
-            sys.stdout.write(f"\r{self.message} {current_char}")
+            char = spinner[i % len(spinner)]
+            sys.stdout.write(f"\r{self.message} {char}")
             sys.stdout.flush()
 
             i += 1
             self._stop_event.wait(self.delay)
 
     def __enter__(self) -> Self:
-        self._executor = ThreadPoolExecutor(max_workers=1)
-        self._future = self._executor.submit(self._spinner)
+        self._stop_event.clear()
+        self._thread = threading.Thread(target=self._spinner, daemon=True)
+        self._thread.start()
 
         return self
 
@@ -46,10 +45,8 @@ class Loading(ContextManager):
     ) -> bool | None:
         self._stop_event.set()
 
-        if self._future:
-            self._future.result(timeout=1)
-        if self._executor:
-            self._executor.shutdown(wait=True)
+        if self._thread:
+            self._thread.join()
 
         sys.stdout.write(f"\r{' ' * (len(self.message) + 5)}\r")
         sys.stdout.flush()
