@@ -1,1 +1,1 @@
-from .loading import Loading
+from .loading import Loading, AsyncLoading
