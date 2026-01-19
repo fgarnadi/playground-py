@@ -17,5 +17,14 @@ venvPath = "."
 venv = ".venv"
 extraPaths = []
 
+[tool.ruff]
+line-length = 80
+extend-include = ["*.ipynb"]
+exclude = [".venv", ".git", "build", "dist"]
+
+[tool.ruff.format]
+quote-style = "double"
+skip-magic-trailing-comma = false
+
 [tool.uv.workspace]
 members = ["notebook-collection"]
