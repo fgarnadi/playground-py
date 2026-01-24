@@ -114,5 +114,3 @@ class LinkedMap(Generic[K, V]):
         if self._tail:
             self._tail.next = node
         self._tail = node
-        if self._head is None:
-            self._head = node

@@ -1,6 +1,6 @@
 PROJECT := playground-py
 
-.PHONY: help sync sync-update check fmt install-kernel
+.PHONY: help sync sync-update check fmt test-playground install-kernel
 .DEFAULT_GOAL := help
 
 help: ## display this help message
@@ -19,6 +19,9 @@ check: ## check for lint and format errors
 fmt: ## fix lint and format
 	@ruff check --fix
 	@ruff format
+
+test-playground:
+	@uv run pytest --cov=src/playground --cov-report=term-missing --cov-branch src/tests
 
 install-kernel: ## install ipython kernel
 	@uv run ipython kernel install --user --env VIRTUAL_ENV $(PWD)/.venv --name=$(PROJECT) --display-name "Python ($(PROJECT))"
