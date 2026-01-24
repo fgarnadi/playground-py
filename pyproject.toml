@@ -16,7 +16,7 @@ dev = [
 ]
 
 [build-system]
-requires = ["uv_build>=0.8.5,<0.9.0"]
+requires = ["uv_build>=0.9.26,<0.10.0"]
 build-backend = "uv_build"
 
 [tool.pyright]
@@ -36,4 +36,5 @@ skip-magic-trailing-comma = false
 [tool.uv.workspace]
 members = [
   "notebook-collection",
+  "workout",
 ]
