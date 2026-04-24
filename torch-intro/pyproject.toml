@@ -1,0 +1,12 @@
+[project]
+name = "torch-intro"
+version = "0.1.0"
+description = "PyTorch intro module tutorial."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "jupyter>=1.1.1",
+  "matplotlib>=3.10.9",
+  "torch>=2.11.0",
+  "torchvision>=0.26.0",
+]
