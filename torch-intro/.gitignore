@@ -1,1 +1,5 @@
-data
+# Ignore data directories
+**/*/data
+
+# Ignore model checkpoints
+**/*/*.pth
